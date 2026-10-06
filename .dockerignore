@@ -1,0 +1,15 @@
+.git
+.github
+**/node_modules
+**/dist
+**/.angular
+**/pb_data
+**/.env
+**/.env.*
+**/gha-creds-*.json
+api/examples
+screenshots
+docs
+**/*.md
+api/pb_public/*
+!api/pb_public/.gitkeep

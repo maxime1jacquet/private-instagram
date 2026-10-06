@@ -1,0 +1,13 @@
+**/pb_data/
+front/node_modules/
+front/dist/
+front/.angular/
+api/pb_public/*
+!api/pb_public/.gitkeep
+.env
+.env.*
+!.env.example
+gha-creds-*.json
+backups/
+.DS_Store
+!.env.deploy.example

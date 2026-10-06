@@ -1,0 +1,66 @@
+@use 'settings/variables' as *;
+@use '@angular/material' as mat;
+@use 'base/utility' as *;
+
+html {
+  @include mat.theme(
+    (
+      color: mat.$green-palette,
+      typography: $font-body,
+      density: 0,
+    )
+  );
+}
+
+// Rich text inserted by the editor needs global styles.
+.travel-prose {
+  font-size: 17px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  img {
+    height: auto;
+    max-width: 100%;
+  }
+  h2,
+  h3,
+  h4 {
+    font-size: fluid(22, 28);
+    line-height: 1.3;
+  }
+  blockquote {
+    border-left: 3px solid $accent;
+    margin-left: 0;
+    padding-left: 20px;
+  }
+  pre {
+    overflow-x: auto;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $background;
+  color: $text;
+  font-family: $font-body;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+a {
+  color: $accent;
+  text-underline-offset: 4px;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid $accent;
+  outline-offset: 4px;
+}

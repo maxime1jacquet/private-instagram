@@ -1,0 +1,12 @@
+@if (loading()) {
+  <div class="travel-status" role="status">
+    <p>Chargement du carnet…</p>
+    <mat-progress-bar mode="indeterminate" aria-label="Chargement" />
+  </div>
+}
+@if (error()) {
+  <div class="travel-status">
+    <p role="alert">{{ error() }}</p>
+    <button mat-stroked-button (click)="retry.emit()">Réessayer</button>
+  </div>
+}

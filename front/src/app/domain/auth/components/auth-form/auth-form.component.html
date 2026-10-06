@@ -1,0 +1,95 @@
+<section class="auth-form" aria-labelledby="auth-title">
+  <p class="auth-form__eyebrow">CARNETS DE VOYAGE</p>
+  <h1 id="auth-title" class="auth-form__title">
+    {{ mode() === 'login' ? 'Heureux de te revoir.' : 'Bienvenue chez toi.' }}
+  </h1>
+  <p class="auth-form__intro">
+    {{
+      mode() === 'login'
+        ? 'Connecte-toi pour retrouver les voyages.'
+        : 'Crée ton compte pour découvrir les carnets.'
+    }}
+  </p>
+  <form
+    class="auth-form__fields"
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    novalidate
+    [attr.aria-busy]="pending()"
+  >
+    <mat-form-field appearance="outline"
+      ><mat-label>Prénom</mat-label
+      ><input
+        matInput
+        id="name"
+        formControlName="name"
+        autocomplete="username"
+        maxlength="255"
+        required
+      /><mat-error>Saisis ton prénom (255 caractères maximum).</mat-error>
+      @if (mode() === 'register') {
+        <mat-hint>Ton prénom doit être unique : il servira à te connecter.</mat-hint>
+      }
+    </mat-form-field>
+    @if (mode() === 'register') {
+      <mat-form-field appearance="outline"
+        ><mat-label>Adresse e-mail</mat-label
+        ><input
+          matInput
+          id="email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          required
+        /><mat-error>Saisis une adresse e-mail valide.</mat-error></mat-form-field
+      >
+    }
+    <mat-form-field appearance="outline"
+      ><mat-label>Mot de passe</mat-label
+      ><input
+        matInput
+        id="password"
+        type="password"
+        formControlName="password"
+        [autocomplete]="mode() === 'login' ? 'current-password' : 'new-password'"
+        required
+      />
+      @if (mode() === 'register') {
+        <mat-hint>Au moins 10 caractères.</mat-hint>
+      }
+      <mat-error>{{
+        mode() === 'register'
+          ? 'Saisis un mot de passe d’au moins 10 caractères.'
+          : 'Saisis ton mot de passe.'
+      }}</mat-error></mat-form-field
+    >
+    @if (mode() === 'register') {
+      <mat-form-field appearance="outline"
+        ><mat-label>Confirme ton mot de passe</mat-label
+        ><input
+          matInput
+          id="password-confirm"
+          type="password"
+          formControlName="passwordConfirm"
+          autocomplete="new-password"
+          required
+        /><mat-error>Confirme ton mot de passe.</mat-error></mat-form-field
+      >
+      @if (form.controls.passwordConfirm.touched && form.hasError('passwordsMismatch')) {
+        <p class="auth-form__error" role="alert">Les deux mots de passe doivent être identiques.</p>
+      }
+    }
+    @if (error()) {
+      <p class="auth-form__error" role="alert">{{ error() }}</p>
+    }
+    <button mat-flat-button class="auth-form__submit" type="submit" [disabled]="pending()">
+      {{ pending() ? 'Un instant…' : mode() === 'login' ? 'Se connecter' : 'Créer mon compte' }}
+    </button>
+  </form>
+  <p class="auth-form__switch">
+    {{ mode() === 'login' ? 'Pas encore de compte ?' : 'Déjà un compte ?' }}
+    <a mat-button [routerLink]="mode() === 'login' ? '/auth/register' : '/auth/login'">{{
+      mode() === 'login' ? 'Inscris-toi' : 'Connecte-toi'
+    }}</a>
+  </p>
+</section>

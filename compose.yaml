@@ -1,0 +1,51 @@
+services:
+  api:
+    build:
+      context: .
+      target: api
+    environment:
+      PORT: "8080"
+      PB_DEV: "true"
+      PB_AUTOMIGRATE: "true"
+    ports:
+      - "127.0.0.1:${API_PORT:-8090}:8080"
+    volumes:
+      - ./api/pb_data:/pb/pb_data
+      - ./api/pb_hooks:/pb/pb_hooks
+      - ./api/pb_migrations:/pb/pb_migrations
+      - ./api/pb_public:/pb/pb_public
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "-q",
+          "-O",
+          "/dev/null",
+          "http://127.0.0.1:8080/api/health",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    stop_grace_period: 10s
+  front:
+    build:
+      context: .
+      target: front-dev
+    command: sh -c "npm ci --no-audit --no-fund --force && npm run start -- --host 0.0.0.0 --poll 1000"
+    environment:
+      PB_PROXY_TARGET: http://api:8080
+    ports:
+      - "127.0.0.1:${FRONT_PORT:-4200}:4200"
+    volumes:
+      - ./front:/app/front
+      - ./api/pb_public:/app/api/pb_public
+      - front_node_modules:/app/front/node_modules
+      - front_angular_cache:/app/front/.angular
+    depends_on:
+      api:
+        condition: service_healthy
+volumes:
+  front_node_modules:
+  front_angular_cache:

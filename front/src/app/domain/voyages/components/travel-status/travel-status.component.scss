@@ -1,0 +1,6 @@
+@use 'settings/variables' as *;
+@use 'base/utility' as *;
+.travel-status {
+  color: $muted;
+  padding: 24px 0;
+}

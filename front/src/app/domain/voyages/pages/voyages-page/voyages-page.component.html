@@ -1,0 +1,21 @@
+<section class="voyages-page" aria-labelledby="voyages-title">
+  <header class="voyages-page__header">
+    <p class="voyages-page__eyebrow">Nos carnets</p>
+    <h1 class="voyages-page__title" id="voyages-title">Les voyages</h1>
+    <p class="voyages-page__intro">Les lieux, les étapes et les souvenirs en images.</p>
+  </header>
+  <app-travel-status
+    [loading]="state()?.status === 'loading'"
+    [error]="state()?.error ?? ''"
+    (retry)="retry()"
+  />
+  @if (state()?.data; as voyages) {
+    <div class="voyages-page__cards">
+      @for (voyage of voyages; track voyage.id) {
+        <app-travel-card [card]="voyage" [link]="['/voyages', voyage.id]" />
+      } @empty {
+        <p>Aucun voyage pour le moment.</p>
+      }
+    </div>
+  }
+</section>

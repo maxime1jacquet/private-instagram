@@ -1,0 +1,6 @@
+<app-auth-form
+  [mode]="mode()"
+  [pending]="auth.pending()"
+  [error]="auth.error()"
+  (submitted)="submit($event)"
+/>

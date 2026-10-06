@@ -1,0 +1,25 @@
+<section class="voyage-page" [attr.aria-labelledby]="state()?.data ? 'voyage-title' : null">
+  <a mat-button class="voyage-page__back" routerLink="/voyages">← Tous les voyages</a>
+  <app-travel-status
+    [loading]="state()?.status === 'loading'"
+    [error]="state()?.error ?? ''"
+    (retry)="retry()"
+  />
+  @if (state()?.data; as detail) {
+    <header class="voyage-page__header">
+      <p class="voyage-page__eyebrow">Carnet de voyage</p>
+      <h1 class="voyage-page__title" id="voyage-title">{{ detail.voyage.title }}</h1>
+      <p class="voyage-page__intro">Les étapes du voyage, au fil des souvenirs.</p>
+    </header>
+    <div class="voyage-page__cards">
+      @for (etape of detail.etapes; track etape.id) {
+        <app-travel-card
+          [card]="etape"
+          [link]="['/voyages', detail.voyage.id, 'etapes', etape.id]"
+        />
+      } @empty {
+        <p>Aucune étape pour ce voyage pour le moment.</p>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,10 @@
+<section class="account-page">
+  <p class="account-page__eyebrow">MON COMPTE</p>
+  <h1 class="account-page__title">Tu es chez toi.</h1>
+  <p class="account-page__intro">Ton espace est prêt. À toi de lui donner vie.</p>
+  <dl class="account-page__details">
+    <dt>Adresse e-mail</dt>
+    <dd class="account-page__email">{{ auth.user()?.email }}</dd>
+  </dl>
+  <button class="account-page__logout" type="button" (click)="logout()">Se déconnecter</button>
+</section>

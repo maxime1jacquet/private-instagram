@@ -1,0 +1,43 @@
+<article class="etape-page" [attr.aria-labelledby]="state()?.data ? 'etape-title' : null">
+  <app-travel-status
+    [loading]="state()?.status === 'loading'"
+    [error]="state()?.error ?? ''"
+    (retry)="retry()"
+  />
+  @if (state()?.data; as detail) {
+    <a mat-button class="etape-page__back" [routerLink]="['/voyages', detail.voyage.id]"
+      >← {{ detail.voyage.title }}</a
+    >
+    <header class="etape-page__header">
+      <p class="etape-page__eyebrow">{{ detail.voyage.title }}</p>
+      <h1 class="etape-page__title" id="etape-title">{{ detail.etape.title }}</h1>
+    </header>
+    @if (detail.etape.description) {
+      <div class="travel-prose" [innerHTML]="detail.etape.description"></div>
+    }
+    <div class="etape-page__gallery" aria-label="Photos de l’étape">
+      @for (image of detail.images; track image.id) {
+        <figure class="etape-page__figure">
+          <a
+            [href]="image.url"
+            target="_blank"
+            rel="noopener"
+            [attr.aria-label]="'Ouvrir la photo ' + ($index + 1) + ' en taille originale'"
+            ><img
+              class="etape-page__image"
+              [src]="image.url"
+              [alt]="detail.etape.title + ' — photo ' + ($index + 1)"
+              loading="lazy"
+          /></a>
+          <figcaption class="etape-page__caption">
+            {{ $index + 1 }} / {{ detail.images.length }}
+          </figcaption>
+        </figure>
+      } @empty {
+        <p>Aucune photo pour cette étape pour le moment.</p>
+      }
+    </div>
+  } @else {
+    <a mat-button class="etape-page__back" routerLink="/voyages">← Tous les voyages</a>
+  }
+</article>

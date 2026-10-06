@@ -1,0 +1,18 @@
+<div class="root">
+  <a class="root__skip" href="#main" (click)="focusContent($event)">Aller au contenu</a>
+  <header class="root__header">
+    <mat-toolbar class="root__toolbar"
+      ><a class="root__brand" routerLink="/voyages"
+        >Carnets de voyage<span class="root__dot" aria-hidden="true">.</span></a
+      >
+      @if (auth.isAuthenticated()) {
+        <nav class="root__nav" aria-label="Navigation principale">
+          <a mat-button routerLink="/voyages">Les voyages</a
+          ><button mat-button (click)="logout()">Déconnexion</button>
+        </nav>
+      }
+    </mat-toolbar>
+  </header>
+  <main #mainContent class="root__main" id="main" tabindex="-1"><router-outlet /></main>
+  <footer class="root__footer">Nos voyages, au fil des souvenirs.</footer>
+</div>

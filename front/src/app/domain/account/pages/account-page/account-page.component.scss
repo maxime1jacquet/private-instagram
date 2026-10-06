@@ -1,0 +1,54 @@
+@use 'settings/variables' as *;
+@use 'base/utility' as *;
+
+.account-page {
+  margin: 0 auto;
+  max-width: 600px;
+
+  &__eyebrow {
+    color: $accent;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  &__title {
+    font-size: fluid(36, 52);
+    line-height: 1.15;
+    margin: 12px 0;
+  }
+
+  &__intro {
+    color: $muted;
+  }
+
+  &__details {
+    background-color: $surface;
+    border: 1px solid $border;
+    border-radius: 12px;
+    display: grid;
+    gap: 8px;
+    margin: 32px 0;
+    padding: 24px;
+  }
+
+  &__email {
+    font-weight: 700;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  &__logout {
+    background-color: $accent;
+    border: 0;
+    border-radius: 10px;
+    color: $surface;
+    cursor: pointer;
+    min-height: 48px;
+    padding: 12px 20px;
+
+    &:hover {
+      background-color: $accent-hover;
+    }
+  }
+}

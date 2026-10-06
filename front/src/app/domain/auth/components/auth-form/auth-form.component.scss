@@ -1,0 +1,43 @@
+@use 'settings/variables' as *;
+@use 'base/utility' as *;
+.auth-form {
+  margin: 0 auto;
+  max-width: 440px;
+  width: 100%;
+  &__eyebrow {
+    color: $accent;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0 0 16px;
+  }
+  &__title {
+    font-size: fluid(32, 42);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin: 0 0 16px;
+  }
+  &__intro {
+    color: $muted;
+    margin: 0 0 32px;
+  }
+  &__fields {
+    display: grid;
+    gap: 16px;
+  }
+  &__error {
+    color: $error;
+    font-size: 14px;
+    margin: 0;
+  }
+  &__submit {
+    min-height: 48px;
+  }
+  &__switch {
+    color: $muted;
+    font-size: 14px;
+    margin: 28px 0 0;
+    text-align: center;
+  }
+}

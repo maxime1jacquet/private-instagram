@@ -1,0 +1,32 @@
+name: Check
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: front/.nvmrc
+          cache: npm
+          cache-dependency-path: front/package-lock.json
+      - run: npm ci
+        working-directory: front
+      - run: npm test -- --watch=false
+        working-directory: front
+      - run: npm run build
+        working-directory: front
+      - run: docker compose config --quiet
+      - run: bash -n scripts/deploy.sh && sh -n api/entrypoint.sh
+      - name: Build production container
+        run: docker build --target production -t starter-check .
+      - name: Exercise PocketBase auth rules and SPA routes
+        run: |
+          docker run -d --name starter-check -p 127.0.0.1:18080:8080 starter-check
+          trap 'docker rm -f starter-check >/dev/null' EXIT
+          node scripts/smoke-test.mjs http://127.0.0.1:18080

@@ -1,0 +1,25 @@
+@use 'sass:math';
+@use 'sass:map';
+
+@function fluid($min-size, $max-size, $min-vw: 380, $max-vw: 1025) {
+  $slope: math.div($max-size - $min-size, $max-vw - $min-vw);
+  $intercept: $min-size - $slope * $min-vw;
+  @if $intercept >= 0 {
+    @return clamp(#{$min-size}px, #{$slope * 100}vw + #{$intercept}px, #{$max-size}px);
+  } @else {
+    @return clamp(#{$min-size}px, #{$slope * 100}vw - #{math.abs($intercept)}px, #{$max-size}px);
+  }
+}
+
+@mixin media-breakpoint-up($name) {
+  $breakpoints: (
+    small: 576px,
+    medium: 768px,
+    large: 1024px,
+    xlarge: 1280px,
+    xxlarge: 1440px,
+  );
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
