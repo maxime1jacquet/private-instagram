@@ -1,0 +1,49 @@
+@use 'settings/variables' as *;
+@use 'base/utility' as *;
+.post-social {
+  border-top: 1px solid $border;
+  display: grid;
+  gap: 20px;
+  padding-top: 32px;
+  &__title {
+    font-size: fluid(22, 28);
+    line-height: 1.3;
+    margin: 0;
+  }
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  &__names {
+    color: $muted;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  &__comments {
+    display: grid;
+    gap: 16px;
+  }
+  &__comment {
+    background-color: $surface;
+    border: 1px solid $border;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  &__meta {
+    align-items: baseline;
+    color: $muted;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 13px;
+    gap: 12px;
+    justify-content: space-between;
+  }
+  &__form {
+    display: grid;
+    gap: 16px;
+  }
+  &__submit {
+    justify-self: start;
+  }
+}

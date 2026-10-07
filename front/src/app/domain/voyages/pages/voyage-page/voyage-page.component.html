@@ -9,12 +9,13 @@
     <header class="voyage-page__header">
       <p class="voyage-page__eyebrow">Carnet de voyage</p>
       <h1 class="voyage-page__title" id="voyage-title">{{ detail.voyage.title }}</h1>
-      <p class="voyage-page__intro">Les étapes du voyage, au fil des souvenirs.</p>
+      <p class="voyage-page__intro">Les dernières étapes du voyage, en premier.</p>
     </header>
     <div class="voyage-page__cards">
       @for (etape of detail.etapes; track etape.id) {
         <app-travel-card
           [card]="etape"
+          [label]="'Étape ' + etape.number"
           [link]="['/voyages', detail.voyage.id, 'etapes', etape.id]"
         />
       } @empty {

@@ -55,6 +55,13 @@ describe('VoyagesApiService', () => {
       expect.objectContaining({ filter: 'trip = "trip-a"', sort: 'created,id' }),
     );
     expect(result.etapes[0].title).toBe('Lisbonne');
+    expect(result.etapes[0].number).toBe(1);
+    posts.getFullList.mockResolvedValue([post, { ...post, id: 'post-b', title: 'Porto' }]);
+    const reversed = await firstValueFrom(api.voyage('trip-a'));
+    expect(reversed.etapes.map((etape) => [etape.title, etape.number])).toEqual([
+      ['Porto', 2],
+      ['Lisbonne', 1],
+    ]);
   });
 
   it('checks that a step belongs to the requested trip before fetching its photos', async () => {

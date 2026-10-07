@@ -4,11 +4,19 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { combineLatest, startWith, Subject, switchMap } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { TravelStatusComponent } from '../../components/travel-status/travel-status.component';
+import { PhotoGalleryComponent } from '../../components/photo-gallery/photo-gallery.component';
+import { PostSocialComponent } from '../../components/post-social/post-social.component';
 import { VoyagesService } from '../../services/voyages.service';
 @Component({
   selector: 'app-etape-page',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, TravelStatusComponent],
+  imports: [
+    RouterLink,
+    MatButtonModule,
+    TravelStatusComponent,
+    PhotoGalleryComponent,
+    PostSocialComponent,
+  ],
   templateUrl: './etape-page.component.html',
   styleUrl: './etape-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

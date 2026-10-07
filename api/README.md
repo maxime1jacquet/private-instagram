@@ -40,3 +40,9 @@ les migrations existantes continuent à s’appliquer. Le schéma doit évoluer 
 
 Pour le premier superuser et les sauvegardes, voir le [README racine](../Readme.md).
 Les limites de Cloud Run/FUSE sont détaillées dans [docs/storage.md](../docs/storage.md).
+
+Les migrations `1791324000_post_social.js` et `1791324060_comment_permission.js`
+sécurisent les réactions des collections existantes et créent une vue de prénoms `album_authors`.
+L’index unique des likes nécessite l’absence de doublons post/auteur ; aucune migration
+ne supprime les données existantes pour résoudre un doublon.
+Le droit de commenter reste administré par un superuser, sans modification des droits déjà accordés.

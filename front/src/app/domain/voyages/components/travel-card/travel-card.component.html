@@ -1,4 +1,9 @@
-<a class="travel-card" [routerLink]="link()" [attr.aria-label]="card().title" matRipple>
+<a
+  class="travel-card"
+  [routerLink]="link()"
+  [attr.aria-label]="label() ? label() + ' — ' + card().title : card().title"
+  matRipple
+>
   <mat-card appearance="outlined" class="travel-card__surface">
     @if (card().image; as image) {
       <img
@@ -11,8 +16,11 @@
     } @else {
       <div class="travel-card__placeholder" aria-hidden="true">Carnet de voyage</div>
     }
-    <mat-card-content class="travel-card__content"
-      ><h2 class="travel-card__title">{{ card().title }}</h2></mat-card-content
+    <mat-card-content class="travel-card__content">
+      @if (label()) {
+        <p class="travel-card__label">{{ label() }}</p>
+      }
+      <h2 class="travel-card__title">{{ card().title }}</h2></mat-card-content
     >
   </mat-card>
 </a>

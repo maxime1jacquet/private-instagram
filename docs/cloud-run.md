@@ -172,8 +172,7 @@ PocketBase affiche un lien d’installation avec jeton dans ses logs tant qu’a
 Consulter les logs du service depuis la console GCP, ou :
 
 ```bash
-gcloud run services logs read "$GCP_SERVICE" \
-  --project="$GCP_PROJECT_ID" --region="$GCP_REGION" --limit=100
+gcloud run services logs read "$GCP_SERVICE" --project="$GCP_PROJECT_ID" --region="$GCP_REGION" --limit=100
 ```
 
 Conserver le chemin et le jeton du lien affiché, mais remplacer `http://0.0.0.0:8080`

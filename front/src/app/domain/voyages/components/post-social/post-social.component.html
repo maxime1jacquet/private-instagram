@@ -1,0 +1,75 @@
+<section class="post-social" aria-labelledby="reactions-title">
+  <h2 class="post-social__title" id="reactions-title">Les réactions</h2>
+  <app-travel-status
+    [loading]="social.loading()"
+    [error]="social.error()"
+    (retry)="social.retry()"
+  />
+  @if (!social.loading()) {
+    <div class="post-social__actions">
+      <button
+        mat-stroked-button
+        [attr.aria-pressed]="!!social.ownLike()"
+        [disabled]="social.pending() || !!social.error()"
+        (click)="social.toggleLike()"
+      >
+        {{ social.ownLike() ? '♥ Aimé · Retirer' : '♡ J’aime' }} · {{ social.data().likes.length }}
+      </button>
+      @if (social.canComment()) {
+        <button mat-button type="button" (click)="focusComment()">
+          Commentaires · {{ social.data().comments.length }}
+        </button>
+      }
+    </div>
+    <p class="post-social__names" aria-live="polite">
+      @for (like of social.data().likes; track like.id) {
+        {{ like.author.name }}{{ $last ? '' : ', ' }}
+      } @empty {
+        Aucun like pour le moment.
+      }
+    </p>
+    @if (social.canComment()) {
+      <h2 class="post-social__title" id="comments-title">Les commentaires</h2>
+      <div class="post-social__comments">
+        @for (comment of social.data().comments; track comment.id) {
+          <article class="post-social__comment">
+            <header class="post-social__meta">
+              <strong>{{ comment.author.name }}</strong
+              ><time [attr.datetime]="comment.created">{{
+                comment.created | date: 'dd/MM/yyyy à HH:mm'
+              }}</time>
+            </header>
+            <div class="travel-prose" [innerHTML]="comment.message"></div>
+          </article>
+        } @empty {
+          <p>Sois le premier à laisser un souvenir.</p>
+        }
+      </div>
+      <form class="post-social__form" [formGroup]="form" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline"
+          ><mat-label>Ton commentaire</mat-label
+          ><textarea
+            #commentInput
+            matInput
+            formControlName="message"
+            rows="3"
+            maxlength="5000"
+            required
+          ></textarea
+          ><mat-hint>5 000 caractères maximum.</mat-hint
+          ><mat-error>Saisis un commentaire.</mat-error></mat-form-field
+        >
+        <button
+          mat-flat-button
+          class="post-social__submit"
+          type="submit"
+          [disabled]="social.pending() || !!social.error()"
+        >
+          {{ social.pending() ? 'Un instant…' : 'Publier le commentaire' }}
+        </button>
+      </form>
+    } @else {
+      <p class="post-social__names">Les commentaires ne sont pas activés pour ton compte.</p>
+    }
+  }
+</section>

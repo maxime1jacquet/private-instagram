@@ -4,6 +4,8 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { vi } from 'vitest';
 import { EtapePageComponent } from './etape-page.component';
 import { VoyagesService } from '../../services/voyages.service';
+import { PostSocialApiService } from '../../data-access/post-social-api.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import { EtapeDetail, TravelState } from '../../models/voyage.model';
 
 describe('EtapePageComponent', () => {
@@ -14,6 +16,7 @@ describe('EtapePageComponent', () => {
       voyage: { id: 'a', title: 'Portugal', image: null },
       etape: {
         id: 'two',
+        number: 2,
         voyageId: 'a',
         title: 'Porto',
         image: null,
@@ -21,6 +24,8 @@ describe('EtapePageComponent', () => {
         description: '<p>Souvenir</p><img src="x" onerror="alert(1)"><script>alert(1)</script>',
       },
       images: [],
+      previous: null,
+      next: null,
     };
     const service = {
       etape: vi
@@ -31,6 +36,11 @@ describe('EtapePageComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
+        { provide: AuthService, useValue: { user: () => null } },
+        {
+          provide: PostSocialApiService,
+          useValue: { load: () => of({ likes: [], comments: [] }) },
+        },
         { provide: ActivatedRoute, useValue: { paramMap: params } },
         { provide: VoyagesService, useValue: service },
       ],

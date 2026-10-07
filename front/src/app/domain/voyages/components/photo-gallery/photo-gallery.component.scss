@@ -1,0 +1,30 @@
+@use 'settings/variables' as *;
+@use 'base/utility' as *;
+.photo-gallery {
+  column-count: 2;
+  column-gap: 12px;
+  @include media-breakpoint-up(small) {
+    column-count: 3;
+    column-gap: 16px;
+  }
+  &__photo {
+    background-color: $surface;
+    border: 0;
+    border-radius: 12px;
+    break-inside: avoid;
+    cursor: zoom-in;
+    display: block;
+    margin-bottom: 12px;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    @include media-breakpoint-up(small) {
+      margin-bottom: 16px;
+    }
+  }
+  &__image {
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+}

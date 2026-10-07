@@ -9,34 +9,30 @@
       >← {{ detail.voyage.title }}</a
     >
     <header class="etape-page__header">
-      <p class="etape-page__eyebrow">{{ detail.voyage.title }}</p>
+      <p class="etape-page__eyebrow">{{ detail.voyage.title }} · Étape {{ detail.etape.number }}</p>
       <h1 class="etape-page__title" id="etape-title">{{ detail.etape.title }}</h1>
     </header>
     @if (detail.etape.description) {
       <div class="travel-prose" [innerHTML]="detail.etape.description"></div>
     }
-    <div class="etape-page__gallery" aria-label="Photos de l’étape">
-      @for (image of detail.images; track image.id) {
-        <figure class="etape-page__figure">
-          <a
-            [href]="image.url"
-            target="_blank"
-            rel="noopener"
-            [attr.aria-label]="'Ouvrir la photo ' + ($index + 1) + ' en taille originale'"
-            ><img
-              class="etape-page__image"
-              [src]="image.url"
-              [alt]="detail.etape.title + ' — photo ' + ($index + 1)"
-              loading="lazy"
-          /></a>
-          <figcaption class="etape-page__caption">
-            {{ $index + 1 }} / {{ detail.images.length }}
-          </figcaption>
-        </figure>
-      } @empty {
-        <p>Aucune photo pour cette étape pour le moment.</p>
+    <app-photo-gallery [images]="detail.images" [title]="detail.etape.title" />
+    <nav class="etape-page__navigation" aria-label="Naviguer entre les étapes">
+      @if (detail.previous; as previous) {
+        <a mat-stroked-button [routerLink]="['/voyages', detail.voyage.id, 'etapes', previous.id]"
+          >← Étape {{ previous.number }} · Précédente</a
+        >
+      } @else {
+        <button mat-stroked-button disabled>← Première étape</button>
       }
-    </div>
+      @if (detail.next; as next) {
+        <a mat-stroked-button [routerLink]="['/voyages', detail.voyage.id, 'etapes', next.id]"
+          >Étape {{ next.number }} · Suivante →</a
+        >
+      } @else {
+        <button mat-stroked-button disabled>Dernière étape →</button>
+      }
+    </nav>
+    <app-post-social [postId]="detail.etape.id" />
   } @else {
     <a mat-button class="etape-page__back" routerLink="/voyages">← Tous les voyages</a>
   }

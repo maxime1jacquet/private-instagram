@@ -12,4 +12,5 @@ export interface AuthUser {
   email: string;
   name: string;
   verified: boolean;
+  canComment?: boolean;
 }

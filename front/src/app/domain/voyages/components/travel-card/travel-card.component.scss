@@ -28,6 +28,12 @@
   &__content {
     padding-top: 20px;
   }
+  &__label {
+    color: $accent;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
   &__title {
     font-size: fluid(20, 24);
     font-weight: 500;

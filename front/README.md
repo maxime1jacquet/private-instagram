@@ -126,3 +126,13 @@ Les couvertures utilisent les miniatures `300x150` et les galeries les fichiers 
 Le HTML de l’éditeur est assaini par Angular, sans contournement du sanitizer.
 Angular Material fournit les cartes, boutons, barre de navigation, champs et indicateurs de chargement.
 Le contenu est centré dans un conteneur de 800 px maximum, avec une colonne sur mobile.
+
+Les étapes sont numérotées selon leur position chronologique dans le voyage, et la liste
+affiche les plus récentes en premier. Les boutons précédente/suivante suivent la chronologie.
+La galerie masonry ouvre une popup Material ; les flèches clavier changent de photo et Échap ferme.
+
+Les réactions utilisent `likes` et `comments`. La vue `album_authors` ne publie que les identifiants
+et prénoms aux utilisateurs connectés. Un like est unique par couple post/auteur et seul son auteur
+peut le retirer. Les commentaires sont visibles et publiables avec le droit `users.comment = true`,
+accordé par un superuser dans PocketBase ; ce droit ne peut pas être obtenu à l’inscription
+ou modifié par le titulaire du compte. Le formulaire conserve son texte en cas d’échec.

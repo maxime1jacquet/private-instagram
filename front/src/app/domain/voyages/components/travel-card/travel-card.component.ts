@@ -13,5 +13,6 @@ import { TravelCard } from '../../models/voyage.model';
 })
 export class TravelCardComponent {
   readonly card = input.required<TravelCard>();
+  readonly label = input('');
   readonly link = input.required<string[]>();
 }

@@ -33,16 +33,17 @@ export class VoyagesApiService {
         requestKey: null,
       });
       const etapes = await Promise.all(
-        posts.map(async (post) =>
+        posts.map(async (post, index) =>
           this.toEtape(
             post,
+            index + 1,
             await this.cover(this.client.filter('post = {:post}', { post: post.id })),
           ),
         ),
       );
       return {
         voyage: this.toVoyage(trip, etapes.find((etape) => etape.image)?.image ?? null),
-        etapes,
+        etapes: etapes.reverse(),
       };
     });
   }
@@ -57,6 +58,13 @@ export class VoyagesApiService {
           this.client.filter('id = {:post} && trip = {:trip}', { post: etapeId, trip: voyageId }),
           { requestKey: null },
         );
+      const siblings = await this.client.collection('posts').getFullList({
+        filter: this.client.filter('trip = {:trip}', { trip: voyageId }),
+        sort: 'created,id',
+        requestKey: null,
+        fields: 'id,title,trip,created',
+      });
+      const index = siblings.findIndex((record) => record.id === post.id);
       const records = await this.client.collection('images').getFullList({
         filter: this.client.filter('post = {:post}', { post: post.id }),
         sort: 'created,id',
@@ -67,7 +75,12 @@ export class VoyagesApiService {
         .map((record) => this.toImage(record));
       return {
         voyage: this.toVoyage(trip, null),
-        etape: this.toEtape(post, images[0] ?? null),
+        etape: this.toEtape(post, index + 1, images[0] ?? null),
+        previous: index > 0 ? this.toEtape(siblings[index - 1], index, null) : null,
+        next:
+          index >= 0 && index < siblings.length - 1
+            ? this.toEtape(siblings[index + 1], index + 2, null)
+            : null,
         images,
       };
     });
@@ -104,9 +117,10 @@ export class VoyagesApiService {
     return { id: record.id, title: String(record['name'] || 'Voyage sans titre'), image };
   }
 
-  private toEtape(record: RecordModel, image: TravelImage | null): Etape {
+  private toEtape(record: RecordModel, number: number, image: TravelImage | null): Etape {
     return {
       id: record.id,
+      number,
       title: String(record['title'] || 'Étape sans titre'),
       image,
       voyageId: String(record['trip']),

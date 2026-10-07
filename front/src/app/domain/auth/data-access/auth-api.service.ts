@@ -64,6 +64,7 @@ export class AuthApiService {
       email: String(record['email'] ?? ''),
       name: String(record['name'] ?? ''),
       verified: Boolean(record['verified']),
+      canComment: Boolean(record['comment']),
     };
   }
 }
